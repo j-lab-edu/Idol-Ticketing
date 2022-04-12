@@ -21,11 +21,11 @@ public class HelpController {
         helpService.board(helpDTO);
         return ("/help");
     }
-    @PatchMapping ("{/description}")
+    @PatchMapping ("description")
     public String patchdesc(@RequestBody HelpDTO helpDTO){
        return "/help";
     }
-    @DeleteMapping("{/description}")
+    @DeleteMapping("description")
     public String deletedesc(@RequestBody HelpDTO helpDTO){
         return"/help";
     }

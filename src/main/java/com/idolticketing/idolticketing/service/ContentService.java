@@ -1,4 +1,10 @@
 package com.idolticketing.idolticketing.service;
 
-public class ContentService {
+import com.idolticketing.idolticketing.dto.ContentDTO;
+
+
+
+public interface ContentService {
+
+    void content(ContentDTO contentDTO);
 }

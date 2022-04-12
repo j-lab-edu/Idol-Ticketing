@@ -18,6 +18,9 @@ public class UserDTO {
     private Date updateTime;
     private Date lastLoginTime;
 
+    public UserDTO(){
+    }
+
     public UserDTO(String userid,String name,String password, String email,String phone,String address,boolean isAdmin,
                    String id,Date createTime,Date updateTime,Date lastLoginTime){
         this.userid = userid;

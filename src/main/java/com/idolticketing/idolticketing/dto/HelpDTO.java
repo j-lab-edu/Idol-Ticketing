@@ -1,8 +1,10 @@
 package com.idolticketing.idolticketing.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class HelpDTO {
     private int id;
     private int count;
@@ -10,6 +12,9 @@ public class HelpDTO {
     private String description;
     private String userid;
 
+    public HelpDTO(){
+
+    }
     public HelpDTO(int id, int count,String title,String description,String userid){
         this.id = id;
         this.count = count;

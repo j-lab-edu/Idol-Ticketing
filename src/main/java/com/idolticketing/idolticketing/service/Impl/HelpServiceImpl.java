@@ -9,7 +9,6 @@ public class HelpServiceImpl implements HelpService {
 
     @Override
     public void board(HelpDTO a) {
-
     }
 
     @Override

@@ -22,6 +22,9 @@ public class ContentDTO {
     private int popularity;
     private Date deadLine;
 
+    public ContentDTO(){
+    }
+
     public ContentDTO(int id, String name, long price, Blob picture, String description, Date date,String location,
                       String seat,String category,String userid,Date createTime,Date updateTime,int popularity, Date deadLine){
         this.id = id;
