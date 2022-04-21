@@ -1,13 +1,19 @@
 package com.idolticketing.idolticketing.controller;
 
+import com.idolticketing.idolticketing.dao.UserMapper;
 import com.idolticketing.idolticketing.dto.HelpDTO;
 import com.idolticketing.idolticketing.service.HelpService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value ="/help")
 public class HelpController {
+
+    @Autowired
+    UserMapper userMapper;
 
     private final HelpService helpService;
 
@@ -15,19 +21,23 @@ public class HelpController {
         this.helpService = helpService;
     }
 
-    @PostMapping("board")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public String board(@RequestBody HelpDTO helpDTO){
-        helpService.board(helpDTO);
-        return ("/help");
+    public ResponseEntity<?> board(@RequestBody HelpDTO helpDTO){
+        int result = helpService.board(helpDTO);
+        return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
-    @PatchMapping ("description")
-    public String patchdesc(@RequestBody HelpDTO helpDTO){
-       return "/help";
+
+    @PatchMapping ("/{id}")
+    public ResponseEntity<?> patchdesc(@RequestBody HelpDTO helpDTO){
+        int result = helpService.patchdesc(helpDTO);
+        return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
-    @DeleteMapping("description")
-    public String deletedesc(@RequestBody HelpDTO helpDTO){
-        return"/help";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletedesc(@RequestBody HelpDTO helpDTO){
+    int result = helpService.deletedesc(helpDTO);
+    return new ResponseEntity<>(helpDTO, HttpStatus.OK);
+
     }
 
 }

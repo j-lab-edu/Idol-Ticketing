@@ -2,13 +2,19 @@ package com.idolticketing.idolticketing.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Data
 public class UserDTO {
-    private String userid;
+    public enum Role {
+        USER,ADMIN
+    }
+
+    private String userId;
     private String name;
     private String password;
+    @Email
     private String email;
     private String phone;
     private String address;
@@ -18,12 +24,15 @@ public class UserDTO {
     private Date updateTime;
     private Date lastLoginTime;
 
+    private Role role;
+
     public UserDTO(){
     }
 
-    public UserDTO(String userid,String name,String password, String email,String phone,String address,boolean isAdmin,
+    public UserDTO(Role role,String userId,String name,String password, String email,String phone,String address,boolean isAdmin,
                    String id,Date createTime,Date updateTime,Date lastLoginTime){
-        this.userid = userid;
+       this.role = role;
+        this.userId = userId;
         this.name = name;
         this.password = password;
         this.email = email;

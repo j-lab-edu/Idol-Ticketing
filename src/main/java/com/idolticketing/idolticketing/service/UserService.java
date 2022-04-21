@@ -5,9 +5,16 @@ import com.idolticketing.idolticketing.dto.UserDTO;
 
 public interface UserService {
 
-    void register(UserDTO user);
-    void login(String id, String password);
-    void password(String password);
-    void userid(String id, String password);
+    //회원가입
+    int register(UserDTO userDTO);
+    //로그인
+    int login(String id, String password);
+
+    int password(String password);
+
+    int logout(UserDTO userDTO);
+
+    int delete(UserDTO userDTO);
+
 
 }

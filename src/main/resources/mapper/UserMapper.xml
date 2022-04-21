@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idolticketing.idolticketing.dao.UserMapper" >
+    <insert id="registUser">
+        INSERT into user
+        (userId,name,password,email,phone,address,role)
+        VALUES (#{userId},#{name},#{password},#{email},#{phone},
+        #{address},#{role})
+    </insert>
+
+   <update id="updatePassword">
+    UPDATE user
+    SET
+       password = #{password}
+    WHERE
+       id = #{id}
+   </update>
+    <select id="selectPassword">
+        SELECT userId, name, password,email,phone,address
+        FROM user
+        WHERE password = #{password}
+    </select>
+    <delete id="deleteUser">
+        DELETE from user
+        WHERE id = #{id}
+    </delete>
+</mapper>

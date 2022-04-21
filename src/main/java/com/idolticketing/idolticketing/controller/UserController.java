@@ -2,21 +2,18 @@ package com.idolticketing.idolticketing.controller;
 
 import com.idolticketing.idolticketing.dto.UserDTO;
 import com.idolticketing.idolticketing.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
 
+    @Autowired
     private final UserService userService;
 
     public UserController(UserService userService){
@@ -25,32 +22,32 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String register(@RequestBody UserDTO userDTO){
-        userService.register(userDTO);
-        return "users/register";
+    public ResponseEntity<?> register(@RequestBody UserDTO userDTO){
+        int result = userService.register(userDTO);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
-
 
     @PostMapping(value = "login")
-    public HttpStatus login(HttpSession session) {
-        return HttpStatus.OK;
+    public ResponseEntity<?> login(@RequestBody String id, String password){
+        int result = userService.login(id,password);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PatchMapping("password")
-    public String password(@RequestBody UserDTO userDTO){
-        return "/users";
+    public ResponseEntity<?> password(@RequestBody String password){
+        int result = userService.password(password);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @PutMapping(value = "logout")
-    public HttpStatus logout(HttpSession session){
-        return HttpStatus.OK;
+    public ResponseEntity<?> logout(@RequestBody UserDTO userDTO){
+        int result = userService.logout(userDTO);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
+    @DeleteMapping("delete")
+    public ResponseEntity<?> delete(@RequestBody UserDTO userDTO) {
+        int result = userService.delete(userDTO);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
 
-    @DeleteMapping("/userid")
-    @ResponseStatus(HttpStatus.OK)
-    public String userid(@RequestBody UserDTO userDTO){
-
-        return "/users";
-    }
-    
 
 //    @ExceptionHandler(SQLException.class)
 //    public ResponseEntity<String> sqlExceptionHandle(){
@@ -62,7 +59,7 @@ public class UserController {
 //        model.addAttribute("message", "Runtime Error");
 //        return "error";
 //    }
-
+    }
 
 
 }

@@ -1,14 +1,19 @@
 package com.idolticketing.idolticketing.controller;
 
+import com.idolticketing.idolticketing.dao.ContentMapper;
 import com.idolticketing.idolticketing.dto.ContentDTO;
-import com.idolticketing.idolticketing.dto.HelpDTO;
 import com.idolticketing.idolticketing.service.ContentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/content")
 public class ContentController {
+
+    @Autowired
+    ContentMapper contentMapper;
 
     private final ContentService contentService;
 
@@ -18,16 +23,28 @@ public class ContentController {
 
     @PostMapping("goods")
     @ResponseStatus(HttpStatus.CREATED)
-    public String goods(@RequestBody ContentDTO contentDTO) {
-        contentService.content(contentDTO);
-        return ("/contents/goods");
+    public ResponseEntity<?>createGoods(@RequestBody ContentDTO contentDTO) {
+       int result = contentService.createGoods(contentDTO);
+       return new ResponseEntity<>(contentDTO,HttpStatus.OK);
+
 
     }
-    @PatchMapping("id")
-    public String patgoods(@RequestBody ContentDTO contentDTO){
-        return ("/contents/goods");
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getContent(@PathVariable Integer id){
+        contentService.getGoods(id);
+        return new ResponseEntity<>(id,HttpStatus.OK);
+
     }
-
-
+    @PatchMapping("patch")
+    public ResponseEntity<?> patchGoods(@RequestBody ContentDTO contentDTO){
+       int result = contentService.patchGoods(contentDTO);
+       return new ResponseEntity<>(contentDTO,HttpStatus.OK);
+    }
+    @DeleteMapping("delete")
+    public ResponseEntity<?> deleteGoods(@RequestBody ContentDTO contentDTO){
+        int result = contentService.deleteGoods(contentDTO);
+        return new ResponseEntity<>(contentDTO,HttpStatus.OK);
+    }
 
 }
+
