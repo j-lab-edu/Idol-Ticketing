@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idolticketing.idolticketing.dao.ContentMapper">
+    <insert id="createContent">
+        INSERT INTO content
+        (code, name, price, picture,description,date,location,seat,category)
+        VALUES
+        (#{code},#[name},#{price},#{picture},#{description},#{date},#{location},#{seat},#{category})
+    </insert>
+    <update id="patchContent">
+        UPDATE content
+        SET
+        description = #{description}
+        name = #{name}
+        price = #{price}
+        picture = #{picture}
+        category = #{category}
+        location = #{location}
+        date = #{date}
+        seat = #{seat}
+        WHERE
+        userId = #{userId}
+    </update>
+    <delete id="deleteContent">
+        DELETE FROM content
+        WHERE
+        id = #{id}
+    </delete>
+    <select id="getContent">
+        SELECT * FROM content where id=#{id};
+    </select>
+
+
+</mapper>
