@@ -21,10 +21,12 @@ public class BookController {
     public BookController(BookService bookService){
         this.bookService=bookService;
     }
+
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createBook(@RequestBody BookDTO bookDTO){
-        int result = bookService.createBook(bookDTO);
+        bookService.createBook(bookDTO);
         return new ResponseEntity<>(bookDTO,HttpStatus.OK);
     }
     @GetMapping("/{id}")
@@ -34,7 +36,7 @@ public class BookController {
 
     }
 
-    @DeleteMapping("cancel")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?>cancelBook(@RequestBody BookDTO bookDTO){
         int result = bookService.cancelBook(bookDTO);
         return new ResponseEntity<>(bookDTO,HttpStatus.OK);

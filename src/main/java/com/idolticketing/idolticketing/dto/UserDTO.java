@@ -7,9 +7,6 @@ import java.util.Date;
 
 @Data
 public class UserDTO {
-    public enum Role {
-        USER,ADMIN
-    }
 
     private String userId;
     private String name;
@@ -24,14 +21,12 @@ public class UserDTO {
     private Date updateTime;
     private Date lastLoginTime;
 
-    private Role role;
-
     public UserDTO(){
     }
 
-    public UserDTO(Role role,String userId,String name,String password, String email,String phone,String address,boolean isAdmin,
+    public UserDTO(String userId,String name,String password, String email,String phone,String address,boolean isAdmin,
                    String id,Date createTime,Date updateTime,Date lastLoginTime){
-       this.role = role;
+
         this.userId = userId;
         this.name = name;
         this.password = password;

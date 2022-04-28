@@ -1,6 +1,7 @@
 package com.idolticketing.idolticketing.service;
 
 import com.idolticketing.idolticketing.dto.UserDTO;
+import org.apache.catalina.User;
 
 
 public interface UserService {
@@ -8,9 +9,11 @@ public interface UserService {
     //회원가입
     int register(UserDTO userDTO);
     //로그인
-    int login(String id, String password);
+    UserDTO login(UserDTO userDTO);
 
-    int password(String password);
+    int password(UserDTO userDTO);
+
+    UserDTO getUserInfo(String userId);
 
     int logout(UserDTO userDTO);
 

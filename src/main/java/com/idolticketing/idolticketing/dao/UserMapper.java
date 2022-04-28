@@ -10,7 +10,9 @@ public interface UserMapper {
      int registUser(UserDTO userDTO);
      int loginUser(String id,String password);
      int logoutUser(UserDTO userDTO);
-     int updatePassword(String userDTO);
+     int updatePassword(UserDTO userDTO);
      int deleteUser(UserDTO userDTO);
+     UserDTO findByIdAndPassword (UserDTO userDTO);
+     UserDTO getUser (String userId);
 
 }

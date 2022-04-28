@@ -15,6 +15,7 @@
    <update id="updateBoard">
     UPDATE help
     SET
+       title=#{title},
        description = #{description}
     WHERE
        userId = #{userId}

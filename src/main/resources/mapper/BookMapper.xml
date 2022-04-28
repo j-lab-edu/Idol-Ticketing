@@ -6,9 +6,9 @@
 <mapper namespace="com.idolticketing.idolticketing.dao.BookMapper">
     <insert id="createBook">
         INSERT INTO book
-        (userid,type,contentId,createTime,updateTime)
+        (userId,category,contentId)
         VALUES
-        (#{userid},#[type},#{contentId},#{createTime},#{updateTime})
+        (#{userId},#{category},#{contentId})
     </insert>
     <delete id="cancel">
         DELETE FROM book

@@ -6,25 +6,31 @@
 <mapper namespace="com.idolticketing.idolticketing.dao.UserMapper" >
     <insert id="registUser">
         INSERT into user
-        (userId,name,password,email,phone,address,role)
+        (userId,name,password,email,phone,address,isAdmin)
         VALUES (#{userId},#{name},#{password},#{email},#{phone},
-        #{address},#{role})
+        #{address},#{isAdmin})
     </insert>
-
-   <update id="updatePassword">
+   <update id="updatePassword" >
     UPDATE user
     SET
        password = #{password}
     WHERE
        id = #{id}
    </update>
-    <select id="selectPassword">
-        SELECT userId, name, password,email,phone,address
+    <select id="findByIdAndPassword" resultType="com.idolticketing.idolticketing.dto.UserDTO">
+        SELECT userId,name,password,email,phone,address
         FROM user
         WHERE password = #{password}
+        AND userId = #{userId}
     </select>
     <delete id="deleteUser">
         DELETE from user
         WHERE id = #{id}
     </delete>
+    <select id="getUser">
+        SELECT userId,name,password,email,phone,address
+        FROM user
+        WHERE password = #{password}
+        AND userId = #{userId}
+    </select>
 </mapper>
