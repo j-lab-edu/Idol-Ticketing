@@ -31,14 +31,14 @@ public class BookController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getBook(@PathVariable Integer id){
-         bookService.getBook(id);
+        bookService.getBook(id);
         return new ResponseEntity<>(id,HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?>cancelBook(@RequestBody BookDTO bookDTO){
-        int result = bookService.cancelBook(bookDTO);
-        return new ResponseEntity<>(bookDTO,HttpStatus.OK);
+    public ResponseEntity<?>cancelBook(@PathVariable Integer id, @RequestParam String token){
+        bookService.cancelBook(id);
+        return new ResponseEntity<>("취소되었습니다",HttpStatus.OK);
     }
 }

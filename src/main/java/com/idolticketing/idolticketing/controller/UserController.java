@@ -3,6 +3,7 @@ package com.idolticketing.idolticketing.controller;
 import com.idolticketing.idolticketing.SessionUtil;
 import com.idolticketing.idolticketing.aop.UserLoginCheck;
 import com.idolticketing.idolticketing.dto.UserDTO;
+import com.idolticketing.idolticketing.dto.UserResponseDTO;
 import com.idolticketing.idolticketing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +30,23 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    @PostMapping(value = "login")
+    @PutMapping(value = "login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
         userService.login(userDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        UserDTO userInfo = userService.login(userDTO);
+        if (userInfo == null) {
+            return new ResponseEntity<>(UserResponseDTO.builder()
+                    .userId(userInfo.getUserId())
+                    .name(userInfo.getName())
+                    .code(401)
+                    .message("일반 유저 로그인 실패").build(), HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(UserResponseDTO.builder()
+                    .userId(userInfo.getUserId())
+                    .name(userInfo.getName())
+                    .code(201)
+                    .message("일반 유저 로그인 성공").build(), HttpStatus.OK);
+        }
     }
 
     @PatchMapping("password")

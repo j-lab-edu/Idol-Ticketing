@@ -6,9 +6,9 @@
 <mapper namespace="com.idolticketing.idolticketing.dao.ContentMapper">
     <insert id="createContent">
         INSERT INTO content
-        (code, name, price, picture,description,date,location,seat,category)
+        ( name, price,description,date,location,seat,category,userId)
         VALUES
-        (#{code},#[name},#{price},#{picture},#{description},#{date},#{location},#{seat},#{category})
+        (#{name},#{price},#{description},#{date},#{location},#{seat},#{category},#{userId})
     </insert>
     <update id="patchContent">
         UPDATE content
@@ -29,7 +29,7 @@
         WHERE
         id = #{id}
     </delete>
-    <select id="getContent">
+    <select id="getContent" resultType="com.idolticketing.idolticketing.dto.ContentDTO">
         SELECT * FROM content where id=#{id};
     </select>
 

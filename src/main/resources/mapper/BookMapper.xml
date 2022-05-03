@@ -15,8 +15,8 @@
         WHERE
         id = #{id}
     </delete>
-    <select id="getBook">
-        SELECT * FROM book where id=#{id};
+    <select id="getBook" resultType="com.idolticketing.idolticketing.dto.BookDTO">
+        SELECT * FROM book where id=#{id}
     </select>
 
 
