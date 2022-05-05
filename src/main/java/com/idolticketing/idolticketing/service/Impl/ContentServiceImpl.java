@@ -32,4 +32,9 @@ public class ContentServiceImpl implements ContentService {
     public ContentDTO getGoods(Integer id) {
         return contentMapper.getContent(id);
     }
+
+    @Override
+    public ContentDTO selectGoods(ContentDTO contentDTO) {
+        return contentMapper.selectContent(contentDTO);
+    }
 }

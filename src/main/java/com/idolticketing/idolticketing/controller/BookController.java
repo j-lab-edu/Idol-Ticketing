@@ -21,22 +21,24 @@ public class BookController {
     public BookController(BookService bookService){
         this.bookService=bookService;
     }
+
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createBook(@RequestBody BookDTO bookDTO){
-        int result = bookService.createBook(bookDTO);
+        bookService.createBook(bookDTO);
         return new ResponseEntity<>(bookDTO,HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getBook(@PathVariable Integer id){
-         bookService.getBook(id);
+        bookService.getBook(id);
         return new ResponseEntity<>(id,HttpStatus.OK);
 
     }
 
-    @DeleteMapping("cancel")
-    public ResponseEntity<?>cancelBook(@RequestBody BookDTO bookDTO){
-        int result = bookService.cancelBook(bookDTO);
-        return new ResponseEntity<>(bookDTO,HttpStatus.OK);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?>cancelBook(@PathVariable Integer id){
+        bookService.cancelBook(id);
+        return new ResponseEntity<>("취소되었습니다",HttpStatus.OK);
     }
 }

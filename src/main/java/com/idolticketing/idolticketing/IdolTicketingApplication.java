@@ -2,6 +2,7 @@ package com.idolticketing.idolticketing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /*
 @SpringBootApplication: 스프링 부트의 가장 기본적인 설정을 선언해 줍니다.
@@ -20,6 +21,7 @@ META-INF 폴더는 manifest 파일을 담는 폴더로 활용되며 manifest 파
 
  */
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class IdolTicketingApplication {
 
 	public static void main(String[] args) {

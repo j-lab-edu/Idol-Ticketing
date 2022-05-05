@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BookMapper {
     int createBook(BookDTO bookDTO);
     BookDTO getBook(Integer id);
-    int cancel(BookDTO bookDTO);
+    int cancel(Integer id);
 }

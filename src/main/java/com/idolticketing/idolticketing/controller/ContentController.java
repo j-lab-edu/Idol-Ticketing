@@ -24,7 +24,7 @@ public class ContentController {
     @PostMapping("goods")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?>createGoods(@RequestBody ContentDTO contentDTO) {
-       int result = contentService.createGoods(contentDTO);
+       contentService.createGoods(contentDTO);
        return new ResponseEntity<>(contentDTO,HttpStatus.OK);
 
 
@@ -35,15 +35,22 @@ public class ContentController {
         return new ResponseEntity<>(id,HttpStatus.OK);
 
     }
-    @PatchMapping("patch")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> patchGoods(@RequestBody ContentDTO contentDTO){
-       int result = contentService.patchGoods(contentDTO);
+       contentService.patchGoods(contentDTO);
        return new ResponseEntity<>(contentDTO,HttpStatus.OK);
     }
-    @DeleteMapping("delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteGoods(@RequestBody ContentDTO contentDTO){
         int result = contentService.deleteGoods(contentDTO);
         return new ResponseEntity<>(contentDTO,HttpStatus.OK);
+    }
+
+    @GetMapping("select")
+    public ResponseEntity<?>selectGoods(@RequestBody ContentDTO contentDTO){
+        contentService.selectGoods(contentDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }

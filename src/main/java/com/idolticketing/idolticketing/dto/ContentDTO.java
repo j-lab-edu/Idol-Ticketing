@@ -16,17 +16,18 @@ public class ContentDTO {
     private String location;
     private String seat;
     private String category;
-    private String userid;
+    private String userId;
     private Date createTime;
     private Date updateTime;
     private int popularity;
     private Date deadLine;
+    private String keyword;
 
     public ContentDTO(){
     }
 
     public ContentDTO(int id, String name, long price, Blob picture, String description, Date date,String location,
-                      String seat,String category,String userid,Date createTime,Date updateTime,int popularity, Date deadLine){
+                      String seat,String category,String userId,Date createTime,Date updateTime,int popularity, Date deadLine,String keyword){
         this.id = id;
         this.name = name;
         this.price = price;
@@ -36,11 +37,12 @@ public class ContentDTO {
         this.location = location;
         this.seat = seat;
         this.category = category;
-        this.userid = userid;
+        this.userId = userId;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.popularity = popularity;
         this.deadLine = deadLine;
+        this.keyword= keyword;
 
     }
 

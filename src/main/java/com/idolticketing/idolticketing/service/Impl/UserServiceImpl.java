@@ -17,15 +17,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int login(String id, String password) {
-        return userMapper.loginUser(id,password);
+    public UserDTO login(UserDTO userDTO) {
+        return userMapper.findByIdAndPassword(userDTO);
 
     }
 
     @Override
-    public int password(String password) {
-        return userMapper.updatePassword(password);
+    public int updateUser(UserDTO userDTO) {
+        return userMapper.updateUser(userDTO);
 
+    }
+
+    @Override
+    public UserDTO getUserInfo(String userId) {
+        return userMapper.getUser(userId);
     }
 
     public int logout(UserDTO userDTO) {
