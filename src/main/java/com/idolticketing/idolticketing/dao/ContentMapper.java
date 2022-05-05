@@ -13,4 +13,5 @@ public interface ContentMapper {
     int patchContent(ContentDTO contentDTO);
     int deleteContent(ContentDTO contentDTO);
     ContentDTO getContent(Integer id);
+    ContentDTO selectContent(ContentDTO contentDTO);
 }

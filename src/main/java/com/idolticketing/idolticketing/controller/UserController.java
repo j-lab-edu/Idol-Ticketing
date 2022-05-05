@@ -31,39 +31,42 @@ public class UserController {
     }
 
     @PutMapping(value = "login")
-    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO, HttpSession session) {
         userService.login(userDTO);
         UserDTO userInfo = userService.login(userDTO);
         if (userInfo == null) {
             return new ResponseEntity<>(UserResponseDTO.builder()
-                    .userId(userInfo.getUserId())
-                    .name(userInfo.getName())
                     .code(401)
                     .message("일반 유저 로그인 실패").build(), HttpStatus.NOT_FOUND);
-        } else {
+         } else {
+            SessionUtil.setLoginUserId(session, userInfo.getUserId());
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .userId(userInfo.getUserId())
                     .name(userInfo.getName())
                     .code(201)
                     .message("일반 유저 로그인 성공").build(), HttpStatus.OK);
+
         }
     }
 
-    @PatchMapping("password")
-    public ResponseEntity<?> password(@RequestBody UserDTO userDTO,
-                                      @PathVariable String id) {
-        userService.password(userDTO);
+    @PatchMapping("updateuser/{userId}")
+    @UserLoginCheck
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO, @PathVariable String userId) {
+        userService.updateUser(userDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "logout")
-    public ResponseEntity<?> logout(@RequestBody UserDTO userDTO) {
-        userService.logout(userDTO);
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    @PutMapping(value = "logout/{userId}")
+    @UserLoginCheck
+    public String logout(HttpSession session,@PathVariable String userId) {
+        SessionUtil.clear(session);
+        return ("로그아웃 되었습니다.");
     }
 
-    @DeleteMapping("delete")
-    public ResponseEntity<?> delete(@RequestBody UserDTO userDTO) {
+
+    @DeleteMapping("{userId}")
+    @UserLoginCheck
+    public ResponseEntity<?> delete(@RequestBody UserDTO userDTO,@PathVariable String userId) {
         userService.delete(userDTO);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }

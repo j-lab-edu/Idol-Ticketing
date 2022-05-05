@@ -11,7 +11,7 @@ public interface UserService {
     //로그인
     UserDTO login(UserDTO userDTO);
 
-    int password(UserDTO userDTO);
+    int updateUser(UserDTO userDTO);
 
     UserDTO getUserInfo(String userId);
 

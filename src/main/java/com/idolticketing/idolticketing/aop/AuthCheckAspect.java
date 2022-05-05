@@ -27,12 +27,14 @@ public class AuthCheckAspect {
     @Before("@annotation(com.idolticketing.idolticketing.aop.UserLoginCheck)")
     public void UserLoginCheck(JoinPoint jp) throws Throwable {
         log.debug("AOP - User Login Check Started");
+        Object[] signatureArgs = jp.getArgs();
 
         HttpSession session = ((ServletRequestAttributes)(RequestContextHolder.currentRequestAttributes())).getRequest().getSession();
-        String userId = SessionUtil.getLoginUserId(session);
+        String sessionUserId = SessionUtil.getLoginUserId(session);
 
-        if (userId == null) {
+        if (sessionUserId == null || !signatureArgs[1].equals(sessionUserId)) {
             throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "NO_LOGIN") {};
         }
     }
+
 }

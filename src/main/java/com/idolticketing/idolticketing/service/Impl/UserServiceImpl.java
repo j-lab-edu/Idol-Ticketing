@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int password(UserDTO userDTO) {
-        return userMapper.updatePassword(userDTO);
+    public int updateUser(UserDTO userDTO) {
+        return userMapper.updateUser(userDTO);
 
     }
 

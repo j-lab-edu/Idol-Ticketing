@@ -46,5 +46,12 @@ public class ContentController {
         return new ResponseEntity<>(contentDTO,HttpStatus.OK);
     }
 
+    @GetMapping("select")
+    public ResponseEntity<?>selectGoods(@RequestBody ContentDTO contentDTO){
+        contentService.selectGoods(contentDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
 }
 

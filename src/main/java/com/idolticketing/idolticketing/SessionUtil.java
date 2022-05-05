@@ -17,6 +17,9 @@ public class SessionUtil {
     public static void setLoginUserId(HttpSession session, String userId) {
         session.setAttribute(LOGIN_USER_ID, userId);
     }
+    public static void clear(HttpSession session) {
+        session.invalidate();
+    }
 
 
 }

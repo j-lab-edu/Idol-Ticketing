@@ -10,13 +10,17 @@
         VALUES (#{userId},#{name},#{password},#{email},#{phone},
         #{address},#{isAdmin})
     </insert>
-   <update id="updatePassword" >
-    UPDATE user
-    SET
-       password = #{password}
-    WHERE
-       id = #{id}
-   </update>
+    <update id="updateUser" >
+        UPDATE user
+        SET
+        name = #{name},
+        email = #{email},
+        phone = #{phone},
+        address = #{address},
+        password = #{password}
+        WHERE
+        id = #{id}
+    </update>
     <select id="findByIdAndPassword" resultType="com.idolticketing.idolticketing.dto.UserDTO">
         SELECT userId,name,password,email,phone,address
         FROM user
@@ -25,7 +29,7 @@
     </select>
     <delete id="deleteUser">
         DELETE from user
-        WHERE id = #{id}
+        WHERE userId = #{userId}
     </delete>
     <select id="getUser">
         SELECT userId,name,password,email,phone,address

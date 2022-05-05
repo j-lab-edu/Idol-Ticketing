@@ -37,7 +37,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?>cancelBook(@PathVariable Integer id, @RequestParam String token){
+    public ResponseEntity<?>cancelBook(@PathVariable Integer id){
         bookService.cancelBook(id);
         return new ResponseEntity<>("취소되었습니다",HttpStatus.OK);
     }

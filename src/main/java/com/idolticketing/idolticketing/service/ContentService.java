@@ -8,4 +8,5 @@ public interface ContentService {
     int patchGoods(ContentDTO contentDTO);
     int deleteGoods(ContentDTO contentDTO);
     ContentDTO getGoods(Integer id);
+    ContentDTO selectGoods(ContentDTO contentDTO);
 }

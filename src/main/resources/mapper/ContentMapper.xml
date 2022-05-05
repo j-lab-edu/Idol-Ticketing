@@ -32,6 +32,9 @@
     <select id="getContent" resultType="com.idolticketing.idolticketing.dto.ContentDTO">
         SELECT * FROM content where id=#{id};
     </select>
-
-
+    <select id="selectContent" resultType="com.idolticketing.idolticketing.dto.ContentDTO">
+        SELECT * FROM content
+        WHERE name
+        LIKE concat('%',#{keyword},'%')
+    </select>
 </mapper>
