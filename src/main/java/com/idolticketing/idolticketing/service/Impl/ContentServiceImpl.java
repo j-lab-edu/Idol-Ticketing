@@ -37,4 +37,15 @@ public class ContentServiceImpl implements ContentService {
     public ContentDTO selectGoods(ContentDTO contentDTO) {
         return contentMapper.selectContent(contentDTO);
     }
+
+
+    @Override
+    public ContentDTO selectPop(ContentDTO contentDTO) {
+        return contentMapper.selectPop(contentDTO);
+    }
+
+    @Override
+    public ContentDTO selectDead(ContentDTO contentDTO) {
+        return contentMapper.selectDead(contentDTO);
+    }
 }
