@@ -1,5 +1,6 @@
 package com.idolticketing.idolticketing.controller;
 
+import com.idolticketing.idolticketing.aop.UserLoginCheck;
 import com.idolticketing.idolticketing.dao.BookMapper;
 import com.idolticketing.idolticketing.dto.BookDTO;
 import com.idolticketing.idolticketing.service.BookService;
@@ -30,14 +31,16 @@ public class BookController {
         return new ResponseEntity<>(bookDTO,HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBook(@PathVariable Integer id){
+    @UserLoginCheck
+    public ResponseEntity<?> getBook(@PathVariable Integer id,String userId){
         bookService.getBook(id);
         return new ResponseEntity<>(id,HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?>cancelBook(@PathVariable Integer id){
+    @UserLoginCheck
+    public ResponseEntity<?>cancelBook(@PathVariable Integer id,String userId){
         bookService.cancelBook(id);
         return new ResponseEntity<>("취소되었습니다",HttpStatus.OK);
     }

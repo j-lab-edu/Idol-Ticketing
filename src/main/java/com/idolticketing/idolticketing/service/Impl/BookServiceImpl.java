@@ -26,5 +26,6 @@ public class BookServiceImpl implements BookService {
     public int cancelBook(Integer id) {
         return bookMapper.cancel(id);
     }
+
 }
 

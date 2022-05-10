@@ -49,9 +49,18 @@ public class ContentController {
     @GetMapping("select")
     public ResponseEntity<?>selectGoods(@RequestBody ContentDTO contentDTO){
         contentService.selectGoods(contentDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(contentService.selectGoods(contentDTO),HttpStatus.OK);
 
     }
-
+    @GetMapping("popularity")
+    public ResponseEntity<?>selectPop(@RequestBody ContentDTO contentDTO){
+        ContentDTO result = contentService.selectPop(contentDTO);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+    @GetMapping("deadline")
+    public ResponseEntity<?>selectDead(@RequestBody ContentDTO contentDTO) {
+        ContentDTO result = contentService.selectDead(contentDTO);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 }
 

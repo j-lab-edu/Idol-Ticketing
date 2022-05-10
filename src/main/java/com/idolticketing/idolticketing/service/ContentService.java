@@ -9,4 +9,6 @@ public interface ContentService {
     int deleteGoods(ContentDTO contentDTO);
     ContentDTO getGoods(Integer id);
     ContentDTO selectGoods(ContentDTO contentDTO);
+    ContentDTO selectPop(ContentDTO contentDTO);
+    ContentDTO selectDead(ContentDTO contentDTO);
 }

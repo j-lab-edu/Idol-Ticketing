@@ -37,4 +37,12 @@
         WHERE name
         LIKE concat('%',#{keyword},'%')
     </select>
+    <select id="selectPop">
+        SELECT * FROM content
+        ORDER BY popularity asc;
+    </select>
+    <select id="selectDead">
+        SELECT * FROM content
+        ORDER BY deadLine asc;
+    </select>
 </mapper>
