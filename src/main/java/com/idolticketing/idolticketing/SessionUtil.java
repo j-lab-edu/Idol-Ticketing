@@ -17,6 +17,12 @@ public class SessionUtil {
     public static void setLoginUserId(HttpSession session, String userId) {
         session.setAttribute(LOGIN_USER_ID, userId);
     }
+    public static  String getLoginAdminId(HttpSession session){
+        return (String) session.getAttribute(LOGIN_ADMIN_ID);
+    }
+    public static void setLoginAdminId(HttpSession session,String userId){
+        session.setAttribute(LOGIN_ADMIN_ID,userId);
+    }
     public static void clear(HttpSession session) {
         session.invalidate();
     }

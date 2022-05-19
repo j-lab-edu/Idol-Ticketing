@@ -10,17 +10,17 @@ public class HelpDTO {
     private int count;
     private String title;
     private String description;
-    private String userid;
+    private String userId;
 
     public HelpDTO(){
 
     }
-    public HelpDTO(int id, int count,String title,String description,String userid){
+    public HelpDTO(int id, int count,String title,String description,String userId){
         this.id = id;
         this.count = count;
         this.title = title;
         this.description = description;
-        this.userid = userid;
+        this.userId = userId;
     }
 
 

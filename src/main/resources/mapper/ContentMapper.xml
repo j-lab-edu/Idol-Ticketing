@@ -6,9 +6,9 @@
 <mapper namespace="com.idolticketing.idolticketing.dao.ContentMapper">
     <insert id="createContent">
         INSERT INTO content
-        ( name, price,description,date,location,seat,category,userId)
+        ( name, price,description,date,location,seat,category,userId,deadLine)
         VALUES
-        (#{name},#{price},#{description},#{date},#{location},#{seat},#{category},#{userId})
+        (#{name},#{price},#{description},#{date},#{location},#{seat},#{category},#{userId},#{deadLine})
     </insert>
     <update id="patchContent">
         UPDATE content
@@ -21,9 +21,11 @@
         location = #{location}
         date = #{date}
         seat = #{seat}
+        deadLine = #{deadLine}
         WHERE
         userId = #{userId}
     </update>
+
     <delete id="deleteContent">
         DELETE FROM content
         WHERE
@@ -34,15 +36,26 @@
     </select>
     <select id="selectContent" resultType="com.idolticketing.idolticketing.dto.ContentDTO">
         SELECT * FROM content
-        WHERE name
-        LIKE concat('%',#{keyword},'%')
+        WHERE
+        name LIKE concat('%',#{keyword},'%')
     </select>
-    <select id="selectPop">
+    <select id="selectContents" resultType="map">
         SELECT * FROM content
-        ORDER BY popularity asc;
+        WHERE
+        name LIKE concat('%',#{keyword},'%')
+        ORDER BY #{sortType} ${upDownType}
+        LIMIT #{limitCount}
     </select>
-    <select id="selectDead">
-        SELECT * FROM content
-        ORDER BY deadLine asc;
-    </select>
+<!--    <select id="selectPop">-->
+<!--        SELECT * FROM content-->
+<!--        ORDER BY #{sortType} asc;-->
+<!--    </select>-->
+<!--    <select id="selectDead">-->
+<!--        SELECT * FROM content-->
+<!--        ORDER BY deadLine asc;-->
+<!--    </select>-->
+<!--    <select id="selectDate">-->
+<!--        SELECT * FROM content-->
+<!--        ORDER BY date asc;-->
+<!--    </select>-->
 </mapper>

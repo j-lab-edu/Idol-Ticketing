@@ -7,6 +7,8 @@ import com.idolticketing.idolticketing.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContentServiceImpl implements ContentService {
     @Autowired
@@ -34,8 +36,13 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public ContentDTO selectGoods(ContentDTO contentDTO) {
+    public ContentDTO selectGood(ContentDTO contentDTO) {
         return contentMapper.selectContent(contentDTO);
+    }
+
+    @Override
+    public List<ContentDTO> selectGoods(ContentDTO contentDTO) {
+        return contentMapper.selectContents(contentDTO);
     }
 
 
@@ -47,5 +54,10 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public ContentDTO selectDead(ContentDTO contentDTO) {
         return contentMapper.selectDead(contentDTO);
+    }
+
+    @Override
+    public ContentDTO selectDate(ContentDTO contentDTO) {
+        return contentMapper.selectDate(contentDTO);
     }
 }

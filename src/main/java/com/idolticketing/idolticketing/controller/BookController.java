@@ -1,6 +1,6 @@
 package com.idolticketing.idolticketing.controller;
 
-import com.idolticketing.idolticketing.aop.UserLoginCheck;
+import com.idolticketing.idolticketing.aop.LoginCheck;
 import com.idolticketing.idolticketing.dao.BookMapper;
 import com.idolticketing.idolticketing.dto.BookDTO;
 import com.idolticketing.idolticketing.service.BookService;
@@ -19,29 +19,32 @@ public class BookController {
     BookMapper bookMapper;
 
     private final BookService bookService;
-    public BookController(BookService bookService){
-        this.bookService=bookService;
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> createBook(@RequestBody BookDTO bookDTO){
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public ResponseEntity<?> createBook(String userId, @RequestBody BookDTO bookDTO) {
         bookService.createBook(bookDTO);
-        return new ResponseEntity<>(bookDTO,HttpStatus.OK);
+        return new ResponseEntity<>(bookDTO, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
-    @UserLoginCheck
-    public ResponseEntity<?> getBook(@PathVariable Integer id,String userId){
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public ResponseEntity<?> getBook(@PathVariable Integer id, String userId) {
         bookService.getBook(id);
-        return new ResponseEntity<>(id,HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    @UserLoginCheck
-    public ResponseEntity<?>cancelBook(@PathVariable Integer id,String userId){
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public ResponseEntity<?> cancelBook(@PathVariable Integer id, String userId) {
         bookService.cancelBook(id);
-        return new ResponseEntity<>("취소되었습니다",HttpStatus.OK);
+        return new ResponseEntity<>("취소되었습니다", HttpStatus.OK);
     }
 }

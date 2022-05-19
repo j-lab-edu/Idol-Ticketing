@@ -1,7 +1,7 @@
 package com.idolticketing.idolticketing.controller;
 
 import com.idolticketing.idolticketing.SessionUtil;
-import com.idolticketing.idolticketing.aop.UserLoginCheck;
+import com.idolticketing.idolticketing.aop.LoginCheck;
 import com.idolticketing.idolticketing.dto.UserDTO;
 import com.idolticketing.idolticketing.dto.UserResponseDTO;
 import com.idolticketing.idolticketing.service.UserService;
@@ -38,7 +38,7 @@ public class UserController {
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .code(401)
                     .message("일반 유저 로그인 실패").build(), HttpStatus.NOT_FOUND);
-         } else {
+        } else {
             SessionUtil.setLoginUserId(session, userInfo.getUserId());
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .userId(userInfo.getUserId())
@@ -50,29 +50,29 @@ public class UserController {
     }
 
     @PatchMapping("updateuser/{userId}")
-    @UserLoginCheck
+    @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO, @PathVariable String userId) {
         userService.updateUser(userDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(value = "logout/{userId}")
-    @UserLoginCheck
-    public String logout(HttpSession session,@PathVariable String userId) {
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public String logout(HttpSession session, @PathVariable String userId) {
         SessionUtil.clear(session);
         return ("로그아웃 되었습니다.");
     }
 
 
     @DeleteMapping("{userId}")
-    @UserLoginCheck
-    public ResponseEntity<?> delete(@RequestBody UserDTO userDTO,@PathVariable String userId) {
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public ResponseEntity<?> delete(@RequestBody UserDTO userDTO, @PathVariable String userId) {
         userService.delete(userDTO);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @GetMapping("myInfo")
-    @UserLoginCheck
+    @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity<UserDTO> userInfo(HttpSession session) {
         String userId = SessionUtil.getLoginUserId(session);
         UserDTO userInfo = userService.getUserInfo(userId);
