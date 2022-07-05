@@ -10,9 +10,10 @@
         VALUES (#{userId},#{name},#{password},#{email},#{phone},
         #{address},#{isAdmin})
     </insert>
-    <update id="updateUser" >
+    <update id="updateUser">
         UPDATE user
         SET
+        userId = #{userId},
         name = #{name},
         email = #{email},
         phone = #{phone},
@@ -22,7 +23,7 @@
         id = #{id}
     </update>
     <select id="findByIdAndPassword" resultType="com.idolticketing.idolticketing.dto.UserDTO">
-        SELECT userId,name,password,email,phone,address
+        SELECT userId,name,password,email,phone,address,isAdmin
         FROM user
         WHERE password = #{password}
         AND userId = #{userId}

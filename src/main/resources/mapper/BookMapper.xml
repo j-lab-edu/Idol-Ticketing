@@ -6,17 +6,26 @@
 <mapper namespace="com.idolticketing.idolticketing.dao.BookMapper">
     <insert id="createBook">
         INSERT INTO book
-        (userId,category,contentId)
+        (userId,category,contentId,bookState)
         VALUES
-        (#{userId},#{category},#{contentId})
+        (#{userId},#{category},#{contentId},#{bookState})
     </insert>
-    <delete id="cancel">
-        DELETE FROM book
+    <update id="cancelBook">
+        UPDATE book
+        SET
+        bookState = #{bookState}
         WHERE
         id = #{id}
-    </delete>
+    </update>
+    <update id="holdBook">
+        UPDATE book
+        SET
+        bookState = #{bookState}
+        WHERE
+        id = #{id}
+    </update>
     <select id="getBook" resultType="com.idolticketing.idolticketing.dto.BookDTO">
-        SELECT * FROM book where id=#{id}
+        SELECT * FROM book where id = #{id}
     </select>
 
 

@@ -6,12 +6,12 @@ import org.apache.catalina.User;
 
 public interface UserService {
 
-    //회원가입
-    int register(UserDTO userDTO);
-    //로그인
+
+    UserDTO register(UserDTO userDTO);
+
     UserDTO login(UserDTO userDTO);
 
-    int updateUser(UserDTO userDTO);
+    UserDTO updateUser(UserDTO userDTO);
 
     UserDTO getUserInfo(String userId);
 

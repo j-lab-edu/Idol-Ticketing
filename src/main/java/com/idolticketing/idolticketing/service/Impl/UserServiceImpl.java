@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
-//회원가입
+    //회원가입
     @Override
-    public int register(UserDTO userDTO) {
+    public UserDTO register(UserDTO userDTO) {
         return userMapper.registUser(userDTO);
     }
 
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateUser(UserDTO userDTO) {
+    public UserDTO updateUser(UserDTO userDTO) {
         return userMapper.updateUser(userDTO);
 
     }

@@ -10,7 +10,7 @@ import java.util.Date;
 @Builder
 public class ContentDTO {
     private int id;
-    private String name;
+    private String contentId;
     private long price;
     private Blob picture;
     private String description;
@@ -27,16 +27,16 @@ public class ContentDTO {
     private SortType sortType;
     private UpDownType upDownType;
     private int limitCount;
-    private ContentCategory contentCategory;
+
 
     public ContentDTO() {
     }
 
-    public ContentDTO(int id, String name, long price, Blob picture, String description, Date date, String location,
+    public ContentDTO(int id, String contentId, long price, Blob picture, String description, Date date, String location,
                       String seat, ContentCategory category, String userId, Date createTime, Date updateTime, int popularity, Date deadLine, String keyword,
-                      SortType sortType, UpDownType upDownType, int limitCount,ContentCategory contentCategory) {
+                      SortType sortType, UpDownType upDownType, int limitCount) {
         this.id = id;
-        this.name = name;
+        this.contentId = contentId;
         this.price = price;
         this.picture = picture;
         this.description = description;
@@ -53,7 +53,6 @@ public class ContentDTO {
         this.sortType = sortType;
         this.upDownType = upDownType;
         this.limitCount = limitCount;
-        this.contentCategory = contentCategory;
 
     }
 

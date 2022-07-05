@@ -1,10 +1,14 @@
 package com.idolticketing.idolticketing.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@Builder
+@AllArgsConstructor
 public class BookDTO {
     private String userId;
     private String category;
@@ -12,11 +16,10 @@ public class BookDTO {
     private Date createTime;
     private Date updateTime;
     private int id;
+    private String bookState;
 
-    public BookDTO(){
-    }
-
-    public BookDTO(String userId, String category, String contentId, Date createTime, Date updateTime, int id){
+    public BookDTO(String bookState,String userId, String category, String contentId, Date createTime, Date updateTime, int id){
+       this.bookState = bookState;
         this.userId = userId;
         this.category = category;
         this.contentId = contentId;
@@ -25,5 +28,9 @@ public class BookDTO {
         this.id = id;
     }
 
+
+    public BookDTO() {
+
+    }
 
 }

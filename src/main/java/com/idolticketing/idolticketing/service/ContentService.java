@@ -8,12 +8,12 @@ public interface ContentService {
 
     int createGoods(ContentDTO contentDTO);
     int patchGoods(ContentDTO contentDTO);
-    int deleteGoods(ContentDTO contentDTO);
+    ContentDTO deleteGoods(Integer id);
     ContentDTO getGoods(Integer id);
-
+    ContentDTO selectCategory(ContentDTO contentDTO);
     ContentDTO selectGood(ContentDTO contentDTO);
     List<ContentDTO> selectGoods(ContentDTO contentDTO);
-    ContentDTO selectPop(ContentDTO contentDTO);
-    ContentDTO selectDead(ContentDTO contentDTO);
-    ContentDTO selectDate(ContentDTO contentDTO);
+
+    //(우산, 커피, 케익 ... )투썸 커피를 사다( )
+
 }

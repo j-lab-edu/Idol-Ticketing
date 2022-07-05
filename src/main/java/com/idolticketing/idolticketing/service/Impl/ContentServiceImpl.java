@@ -14,10 +14,13 @@ public class ContentServiceImpl implements ContentService {
     @Autowired
     ContentMapper contentMapper;
 
-
     @Override
     public int createGoods(ContentDTO contentDTO) {
         return contentMapper.createContent(contentDTO);
+    }
+    @Override
+    public ContentDTO selectCategory(ContentDTO contentDTO) {
+        return contentMapper.selectCategory(contentDTO);
     }
 
     @Override
@@ -26,9 +29,10 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public int deleteGoods(ContentDTO contentDTO) {
-        return contentMapper.deleteContent(contentDTO);
+    public ContentDTO deleteGoods(Integer id) {
+        return contentMapper.deleteContent(id);
     }
+
 
     @Override
     public ContentDTO getGoods(Integer id) {
@@ -46,18 +50,4 @@ public class ContentServiceImpl implements ContentService {
     }
 
 
-    @Override
-    public ContentDTO selectPop(ContentDTO contentDTO) {
-        return contentMapper.selectPop(contentDTO);
-    }
-
-    @Override
-    public ContentDTO selectDead(ContentDTO contentDTO) {
-        return contentMapper.selectDead(contentDTO);
-    }
-
-    @Override
-    public ContentDTO selectDate(ContentDTO contentDTO) {
-        return contentMapper.selectDate(contentDTO);
-    }
 }

@@ -27,4 +27,9 @@ public class HelpServiceImpl implements HelpService {
     public int deletedesc(HelpDTO helpDTO) {
         return helpMapper.deleteBoard(helpDTO);
     }
+
+    @Override
+    public int deleteDescAdmin(HelpDTO helpDTO) {
+        return helpMapper.deleteBoardAdmin(helpDTO);
+    }
 }

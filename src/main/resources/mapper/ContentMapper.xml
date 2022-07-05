@@ -10,22 +10,24 @@
         VALUES
         (#{name},#{price},#{description},#{date},#{location},#{seat},#{category},#{userId},#{deadLine})
     </insert>
+
     <update id="patchContent">
         UPDATE content
         SET
-        description = #{description}
-        name = #{name}
-        price = #{price}
-        picture = #{picture}
-        category = #{category}
-        location = #{location}
-        date = #{date}
-        seat = #{seat}
+        userId = #{userId},
+        description = #{description},
+        price = #{price},
+        category = #{category},
+        location = #{location},
+        date = #{date},
+        seat = #{seat},
         deadLine = #{deadLine}
         WHERE
-        userId = #{userId}
+        id = #{id}
     </update>
-
+    <select id="selectCategory" resultType="com.idolticketing.idolticketing.dto.ContentDTO">
+        SELECT * FROM content where category=#{category};
+    </select>
     <delete id="deleteContent">
         DELETE FROM content
         WHERE
