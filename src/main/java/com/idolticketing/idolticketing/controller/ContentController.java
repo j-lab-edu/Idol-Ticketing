@@ -2,18 +2,14 @@ package com.idolticketing.idolticketing.controller;
 
 import com.idolticketing.idolticketing.aop.LoginCheck;
 import com.idolticketing.idolticketing.dao.ContentMapper;
-import com.idolticketing.idolticketing.dto.ContentCategory;
-import com.idolticketing.idolticketing.dto.ContentDTO;
-import com.idolticketing.idolticketing.dto.SortType;
-import com.idolticketing.idolticketing.dto.UpDownType;
+import dto.ContentCategory;
+import dto.ContentDTO;
 import com.idolticketing.idolticketing.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Blob;
-import java.util.Date;
 import java.util.List;
 
 
@@ -61,7 +57,8 @@ public class ContentController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContentDTO> getContent(@RequestParam Integer id) {
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public ResponseEntity<ContentDTO> getContent(String userId, boolean isAdmin,@RequestParam(value = "id",required=false) Integer id) {
         return new ResponseEntity<>(contentService.getGoods(id), HttpStatus.OK);
     }
 

@@ -3,9 +3,8 @@ package com.idolticketing.idolticketing.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idolticketing.idolticketing.dao.BookMapper;
-import com.idolticketing.idolticketing.dto.BookDTO;
-import com.idolticketing.idolticketing.dto.ContentCategory;
-import com.idolticketing.idolticketing.dto.ContentDTO;
+import dto.BookDTO;
+import dto.ContentCategory;
 import com.idolticketing.idolticketing.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +23,6 @@ import java.util.Date;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -47,25 +45,19 @@ class BookControllerTest {
     @Test
     @WithMockUser
     void createBook() throws Exception {
-//        BookDTO bookDTO = new BookDTO();
-//        bookDTO.setUserId("test11");
-//        bookDTO.setBookState("COMPLETE");
-//        bookDTO.setContentId("sample123");
-//        bookDTO.setCategory("CONCERT");
-//
-//        assertEquals("test11", bookDTO.getUserId());
         String bookDTO = objectMapper.writeValueAsString(BookDTO.builder()
                 .contentId("cpntent")
-                        .userId("test")
-                        .bookState("HOLD")
-                        .createTime(new Date(2022-20-02))
-                             .build());
+                .userId("test")
+                .bookState("HOLD")
+                .createTime(new Date(2022 - 20 - 02))
+                .build());
 
         String userId = "test";
 
         ResultActions actions =
                 mockMvc.perform(
                         post("/book")
+                                .param("userId", "test")
                                 .content(String.valueOf(bookDTO))
                                 .contentType(MediaType.APPLICATION_JSON));
 
@@ -77,17 +69,66 @@ class BookControllerTest {
 
     @Test
     @WithMockUser
+    void createBookfail() throws Exception {
+        String bookDTO = objectMapper.writeValueAsString(BookDTO.builder()
+                .contentId("cpntent")
+                .userId("test")
+                .bookState("HOLD")
+                .createTime(new Date(2022 - 20 - 02))
+                .build());
+
+        String userId = "test1";
+
+        ResultActions actions =
+                mockMvc.perform(
+                        post("/book/fail")
+                                .param("userId", "test")
+                                .content(String.valueOf(bookDTO))
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        actions
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+    }
+
+
+    @Test
+    @WithMockUser
     void getBook() throws Exception {
+        String bookDTO = objectMapper.writeValueAsString(BookDTO.builder()
+                .contentId("bille")
+                .userId("test3")
+                .category(ContentCategory.CONCERT)
+                .bookState("COMPLETE")
+                .build());
+
         ResultActions actions = mockMvc.perform(get("/book/get")
-                        .param("userId","test1")
-                        .param("category","CONCERT")
-                        .param("contentId","sample")
-                        .param("bookState","HOLD")
+                .content(bookDTO)
                 .contentType(MediaType.APPLICATION_JSON));
 
         actions
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser
+    void getBookfail() throws Exception {
+        String bookDTO = objectMapper.writeValueAsString(BookDTO.builder()
+                .contentId("bille")
+                .userId("test3")
+                .category(ContentCategory.FANCLUB)
+                .bookState("COMPLETE")
+                .build());
+
+        ResultActions actions = mockMvc.perform(get("/book/get/fail")
+                .content(bookDTO)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        actions
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 
 }

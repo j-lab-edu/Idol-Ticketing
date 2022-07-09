@@ -1,6 +1,6 @@
 package com.idolticketing.idolticketing.dao;
 
-import com.idolticketing.idolticketing.dto.ContentDTO;
+import dto.ContentDTO;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 

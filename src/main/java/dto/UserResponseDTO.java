@@ -1,4 +1,4 @@
-package com.idolticketing.idolticketing.dto;
+package dto;
 
 import lombok.Builder;
 import lombok.Data;

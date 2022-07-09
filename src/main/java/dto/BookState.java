@@ -1,4 +1,4 @@
-package com.idolticketing.idolticketing.dto;
+package dto;
 
 public enum BookState {
     COMPLETE,CANCEL,HOLD

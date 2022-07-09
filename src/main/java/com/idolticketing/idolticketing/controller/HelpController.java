@@ -2,7 +2,7 @@ package com.idolticketing.idolticketing.controller;
 
 import com.idolticketing.idolticketing.aop.LoginCheck;
 import com.idolticketing.idolticketing.dao.HelpMapper;
-import com.idolticketing.idolticketing.dto.HelpDTO;
+import dto.HelpDTO;
 import com.idolticketing.idolticketing.service.HelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class HelpController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     @LoginCheck(type = LoginCheck.Role.USER)
-    public ResponseEntity<?> board(String userId,boolean isAdmin, HelpDTO helpDTO) {
+    public ResponseEntity<?> board(String userId,boolean isAdmin, @RequestBody HelpDTO helpDTO) {
         if (userId.equals(helpDTO.getUserId())) {
             int result = helpService.board(helpDTO);
         } else {

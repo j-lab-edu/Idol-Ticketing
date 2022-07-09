@@ -1,7 +1,7 @@
 package com.idolticketing.idolticketing.service.Impl;
 
 import com.idolticketing.idolticketing.dao.UserMapper;
-import com.idolticketing.idolticketing.dto.UserDTO;
+import dto.UserDTO;
 import com.idolticketing.idolticketing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     //회원가입
     @Override
-    public UserDTO register(UserDTO userDTO) {
+    public int register(UserDTO userDTO) {
         return userMapper.registUser(userDTO);
     }
 

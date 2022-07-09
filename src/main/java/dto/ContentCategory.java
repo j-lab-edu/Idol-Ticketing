@@ -1,4 +1,4 @@
-package com.idolticketing.idolticketing.dto;
+package dto;
 
 public enum ContentCategory {
     CONCERT, MUSICAL,FANMEETING,FANCLUB,NOTICE

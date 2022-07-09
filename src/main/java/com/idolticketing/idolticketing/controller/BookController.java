@@ -2,7 +2,7 @@
 
     import com.idolticketing.idolticketing.aop.LoginCheck;
     import com.idolticketing.idolticketing.dao.BookMapper;
-    import com.idolticketing.idolticketing.dto.BookDTO;
+    import dto.BookDTO;
     import com.idolticketing.idolticketing.service.BookService;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
@@ -38,9 +38,9 @@
         @GetMapping("/get")
         @LoginCheck(type = LoginCheck.Role.USER)
         public ResponseEntity<?> getBook(String userId, BookDTO bookDTO,
-                                         @RequestParam String category,
-                                         @RequestParam String contentId,
-                                         @RequestParam String bookState) {
+                                         @RequestParam(value = "category", required = false) String category,
+                                         @RequestParam(value = "content", required = false) String contentId,
+                                         @RequestParam(value = "bookState", required = false) String bookState) {
 
             if (userId.equals(bookDTO.getUserId())) {
                 bookService.getBook(bookDTO);

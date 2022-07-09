@@ -1,6 +1,6 @@
 package com.idolticketing.idolticketing.service;
 
-import com.idolticketing.idolticketing.dto.BookDTO;
+import dto.BookDTO;
 
 public interface BookService {
     int createBook(BookDTO bookDTO);

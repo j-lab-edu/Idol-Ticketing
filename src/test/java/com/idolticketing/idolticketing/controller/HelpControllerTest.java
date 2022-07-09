@@ -2,6 +2,7 @@ package com.idolticketing.idolticketing.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idolticketing.idolticketing.dao.HelpMapper;
+import dto.HelpDTO;
 import com.idolticketing.idolticketing.service.HelpService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -31,20 +33,50 @@ class HelpControllerTest {
     @MockBean
     private HelpMapper helpMapper;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     @Test
+    @WithMockUser
     void board() throws Exception {
+        String helpDTO = objectMapper.writeValueAsString(HelpDTO.builder()
+                .isAdmin(false)
+                .description("abcdef")
+                .title("test")
+                .userId("test3")
+                .build());
+
         ResultActions actions =
                 mockMvc.perform(
                         post("/help")
-                                .param("title","test")
-                                .param("description","abcsdeg")
-                                .param("userId","test2211")
+                                .param("userId","test3")
+                                .content(helpDTO)
                                 .contentType(MediaType.APPLICATION_JSON));
 
         actions
                 .andDo(print())
                 .andExpect(status().isOk());
+
+    }
+    @Test
+    void boardfail() throws Exception {
+        String helpDTO = objectMapper.writeValueAsString(HelpDTO.builder()
+                .isAdmin(false)
+                .description("abcdef")
+                .title("test")
+                .userId("test3")
+                .build());
+        ResultActions actions =
+                mockMvc.perform(
+                        post("/help/fail")
+                                .param("userId", "test2211")
+                                .content(helpDTO)
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        actions
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
 
     }
 
@@ -53,10 +85,10 @@ class HelpControllerTest {
         int id = 11;
         ResultActions actions =
                 mockMvc.perform(
-                        patch("/help/{id}",id)
-                                .param("title","test")
-                                .param("description","abcsdeg")
-                                .param("userId","test2211")
+                        patch("/help/{id}", id)
+                                .param("title", "test")
+                                .param("description", "abcsdeg")
+                                .param("userId", "test2211")
                                 .contentType(MediaType.APPLICATION_JSON));
 
         actions
@@ -70,10 +102,10 @@ class HelpControllerTest {
         int id = 222;
         ResultActions actions =
                 mockMvc.perform(
-                        delete("/help/{id}",id)
-                                .param("title","test")
-                                .param("description","abcsdeg")
-                                .param("userId","test2211")
+                        delete("/help/{id}", id)
+                                .param("title", "test")
+                                .param("description", "abcsdeg")
+                                .param("userId", "test2211")
                                 .contentType(MediaType.APPLICATION_JSON));
 
         actions

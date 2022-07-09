@@ -1,6 +1,6 @@
 package com.idolticketing.idolticketing.dao;
 
-import com.idolticketing.idolticketing.dto.BookDTO;
+import dto.BookDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

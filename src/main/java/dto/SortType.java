@@ -1,4 +1,4 @@
-package com.idolticketing.idolticketing.dto;
+package dto;
 
 public enum SortType {
     DATE,POPULARITY,DEADLINE

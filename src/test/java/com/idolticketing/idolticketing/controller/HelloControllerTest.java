@@ -19,7 +19,7 @@ class HelloControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void HelloTest() throws Exception{
+    public void HelloTest() throws Exception {
         String hello = "hello";
 
         mvc.perform(MockMvcRequestBuilders.get("/hello"))

@@ -22,7 +22,7 @@
         WHERE
         id = #{id}
     </update>
-    <select id="findByIdAndPassword" resultType="com.idolticketing.idolticketing.dto.UserDTO">
+    <select id="findByIdAndPassword" resultType="dto.UserDTO">
         SELECT userId,name,password,email,phone,address,isAdmin
         FROM user
         WHERE password = #{password}

@@ -2,10 +2,9 @@ package com.idolticketing.idolticketing.controller;
 
 import com.idolticketing.idolticketing.SessionUtil;
 import com.idolticketing.idolticketing.aop.LoginCheck;
-import com.idolticketing.idolticketing.dao.HelpMapper;
 import com.idolticketing.idolticketing.dao.UserMapper;
-import com.idolticketing.idolticketing.dto.UserDTO;
-import com.idolticketing.idolticketing.dto.UserResponseDTO;
+import dto.UserDTO;
+import dto.UserResponseDTO;
 import com.idolticketing.idolticketing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class UserController {
 
     @PutMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO, HttpSession session) {
-        userService.login(userDTO);
+
         UserDTO userInfo = userService.login(userDTO);
 
         if (userInfo.isAdmin() == false) {
@@ -63,7 +62,7 @@ public class UserController {
         }
     }
 
-    @PatchMapping("updateuser")
+    @PatchMapping("/updateuser")
     @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity<?> updateUser(String userId,boolean isAdmin,@RequestBody UserDTO userDTO) {
         if(userId.equals(userDTO.getUserId())) {

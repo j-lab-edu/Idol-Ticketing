@@ -62,7 +62,7 @@ public class AuthCheckAspect {
 
         if (jp.getArgs() != null){
             signatureArgs[0] = sessionUserId;
-            signatureArgs[1] = isAdmin;   
+            signatureArgs[1] = isAdmin;
         }
         return jp.proceed(signatureArgs);
     }

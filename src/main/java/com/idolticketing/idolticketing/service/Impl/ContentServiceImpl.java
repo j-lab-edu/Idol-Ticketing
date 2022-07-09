@@ -2,7 +2,7 @@ package com.idolticketing.idolticketing.service.Impl;
 
 import com.idolticketing.idolticketing.dao.ContentMapper;
 
-import com.idolticketing.idolticketing.dto.ContentDTO;
+import dto.ContentDTO;
 import com.idolticketing.idolticketing.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

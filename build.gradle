@@ -33,6 +33,10 @@ dependencies {
 	testImplementation("org.junit.platform:junit-platform-launcher:1.5.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+
+//	//# Mybatis 테스트를 위해 추가
+//	testCompile('org.mybatis.spring.boot:mybatis-spring-boot-starter-test:1.3.2')
+//	testCompile("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.2.2")
 }
 
 test {

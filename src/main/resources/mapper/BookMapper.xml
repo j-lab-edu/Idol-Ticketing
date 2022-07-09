@@ -24,7 +24,7 @@
         WHERE
         id = #{id}
     </update>
-    <select id="getBook" resultType="com.idolticketing.idolticketing.dto.BookDTO">
+    <select id="getBook" resultType="dto.BookDTO">
         SELECT * FROM book where id = #{id}
     </select>
 

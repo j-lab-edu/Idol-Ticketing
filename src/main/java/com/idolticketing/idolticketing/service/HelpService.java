@@ -1,7 +1,6 @@
 package com.idolticketing.idolticketing.service;
 
-import com.idolticketing.idolticketing.dto.HelpDTO;
-import com.sun.corba.se.impl.orbutil.HexOutputStream;
+import dto.HelpDTO;
 
 public interface HelpService {
 

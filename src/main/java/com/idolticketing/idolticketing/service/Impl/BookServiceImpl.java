@@ -2,13 +2,10 @@ package com.idolticketing.idolticketing.service.Impl;
 
 
 import com.idolticketing.idolticketing.dao.BookMapper;
-import com.idolticketing.idolticketing.dto.BookDTO;
-import com.idolticketing.idolticketing.dto.BookState;
+import dto.BookDTO;
 import com.idolticketing.idolticketing.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {

@@ -1,7 +1,7 @@
 package com.idolticketing.idolticketing.service.Impl;
 
 import com.idolticketing.idolticketing.dao.HelpMapper;
-import com.idolticketing.idolticketing.dto.HelpDTO;
+import dto.HelpDTO;
 import com.idolticketing.idolticketing.service.HelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
