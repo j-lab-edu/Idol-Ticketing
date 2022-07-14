@@ -2,9 +2,8 @@ package com.idolticketing.idolticketing.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idolticketing.idolticketing.dao.UserMapper;
-import dto.UserDTO;
 import com.idolticketing.idolticketing.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
+import dto.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +11,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,17 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = UserController.class)
 class UserControllerTest {
-
-    @Autowired
-    WebApplicationContext context;
-    protected MockHttpSession session;
-
-    @BeforeEach// 1
-    public void setUp() throws Exception {
-        session = new MockHttpSession();
-
-        session.setAttribute("name", "테스트");
-    }
 
     @Autowired
     MockMvc mockMvc;
@@ -129,7 +114,6 @@ class UserControllerTest {
 
 
     }
-
 
     @Test
     void delete() throws Exception {

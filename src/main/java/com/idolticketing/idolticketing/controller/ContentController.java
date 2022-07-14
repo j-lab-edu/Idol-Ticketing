@@ -58,8 +58,15 @@ public class ContentController {
 
     @GetMapping("/{id}")
     @LoginCheck(type = LoginCheck.Role.USER)
-    public ResponseEntity<ContentDTO> getContent(String userId, boolean isAdmin,@RequestParam(value = "id",required=false) Integer id) {
-        return new ResponseEntity<>(contentService.getGoods(id), HttpStatus.OK);
+    public ResponseEntity<?> getContent(String userId, boolean isAdmin,
+                                        ContentDTO contentDTO,
+                                        @RequestParam(value = "id",required=false) Integer id) {
+        if (userId.equals(contentDTO.getUserId()) ) {
+            contentService.getGoods(contentDTO.getId());
+        } else {
+            return new ResponseEntity<>("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(contentDTO, HttpStatus.OK);
     }
 
     @GetMapping("category")

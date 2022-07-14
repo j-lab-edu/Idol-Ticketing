@@ -3,9 +3,9 @@ package com.idolticketing.idolticketing.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idolticketing.idolticketing.dao.BookMapper;
+import com.idolticketing.idolticketing.service.BookService;
 import dto.BookDTO;
 import dto.ContentCategory;
-import com.idolticketing.idolticketing.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -43,16 +42,13 @@ class BookControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser
     void createBook() throws Exception {
         String bookDTO = objectMapper.writeValueAsString(BookDTO.builder()
-                .contentId("cpntent")
+                .contentId("bille")
                 .userId("test")
                 .bookState("HOLD")
                 .createTime(new Date(2022 - 20 - 02))
                 .build());
-
-        String userId = "test";
 
         ResultActions actions =
                 mockMvc.perform(
@@ -68,7 +64,6 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser
     void createBookfail() throws Exception {
         String bookDTO = objectMapper.writeValueAsString(BookDTO.builder()
                 .contentId("cpntent")
@@ -94,7 +89,6 @@ class BookControllerTest {
 
 
     @Test
-    @WithMockUser
     void getBook() throws Exception {
         String bookDTO = objectMapper.writeValueAsString(BookDTO.builder()
                 .contentId("bille")
@@ -104,6 +98,7 @@ class BookControllerTest {
                 .build());
 
         ResultActions actions = mockMvc.perform(get("/book/get")
+                        .param("userId","test3")
                 .content(bookDTO)
                 .contentType(MediaType.APPLICATION_JSON));
 
@@ -113,7 +108,6 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser
     void getBookfail() throws Exception {
         String bookDTO = objectMapper.writeValueAsString(BookDTO.builder()
                 .contentId("bille")

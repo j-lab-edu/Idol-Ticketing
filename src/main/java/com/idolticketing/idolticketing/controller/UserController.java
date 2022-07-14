@@ -62,7 +62,7 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/updateuser")
+    @PatchMapping(value = "/updateuser")
     @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity<?> updateUser(String userId,boolean isAdmin,@RequestBody UserDTO userDTO) {
         if(userId.equals(userDTO.getUserId())) {

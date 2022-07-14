@@ -1,7 +1,14 @@
 package com.idolticketing.idolticketing;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.idolticketing.idolticketing.dao.BookMapper;
+import com.idolticketing.idolticketing.dao.ContentMapper;
+import com.idolticketing.idolticketing.dao.HelpMapper;
 import com.idolticketing.idolticketing.dao.UserMapper;
+import com.idolticketing.idolticketing.service.BookService;
+import com.idolticketing.idolticketing.service.ContentService;
+import com.idolticketing.idolticketing.service.HelpService;
+import dto.ContentDTO;
 import dto.UserDTO;
 import com.idolticketing.idolticketing.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebAppConfiguration
 @SpringBootTest
@@ -31,14 +37,19 @@ class IdolTicketingApplicationTests {
     @Autowired
     WebApplicationContext context;
 
-
     protected MockHttpSession session;
 
-    @BeforeEach// 1
+    @BeforeEach
     public void setUp() throws Exception {
         session = new MockHttpSession();
 
         session.setAttribute("name", "테스트");
+
+        String object = objectMapper.writeValueAsString(UserDTO.builder()
+                .userId("test1")
+                .password("abc111")
+                .isAdmin(false)
+                .build());
     }
 
 
@@ -52,7 +63,25 @@ class IdolTicketingApplicationTests {
     private UserMapper userMapper;
 
     @Autowired
+    private ContentService contentService;
+
+    @Autowired
+    private ContentMapper contentMapper;
+
+    @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private BookMapper bookMapper;
+
+    @Autowired
+    private HelpService helpService;
+
+    @Autowired
+    private HelpMapper helpMapper;
 
 
     @Test
@@ -133,6 +162,7 @@ class IdolTicketingApplicationTests {
 //
 //    }
     @Test
+    @WithMockUser
     void updateUser() throws Exception {
 //        String userDTO = objectMapper.writeValueAsString(UserDTO.builder()
 //                .userId("test1")
@@ -166,11 +196,34 @@ class IdolTicketingApplicationTests {
 
         actions
                 .andDo(print())
+                .andExpect(jsonPath("$.success").value(true))
                 .andExpect(status().isOk());
 
 
     }
 
+    @Test
+    void getContent() throws Exception {
+        String contentDTO = objectMapper.writeValueAsString(ContentDTO.builder()
+                .userId("test1")
+                .contentId("test1")
+                .id(2)
+                .build());
 
+        int id = 2;
+        ResultActions actions =
+                mockMvc.perform(get("/content/{id}", id)
+                .content(contentDTO)
+                .contentType(MediaType.APPLICATION_JSON));
+
+
+        //  ResultActions actions = mockMvc.perform(get("/content/2").params(requestParams)).andExpect(status().isOk());
+
+        actions
+                .andDo(print())
+                .andExpect(jsonPath("$.success").value(true));
+
+
+    }
 }
 
