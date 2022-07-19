@@ -26,7 +26,7 @@
         @PostMapping("")
         @ResponseStatus(HttpStatus.CREATED)
         @LoginCheck(type = LoginCheck.Role.USER)
-        public ResponseEntity<?> createBook(String userId, @RequestBody BookDTO bookDTO) throws Exception {
+        public ResponseEntity<?> createBook(String userId,boolean isAdmin, @RequestBody BookDTO bookDTO) throws Exception {
             if(userId.equals(bookDTO.getUserId())){
                 bookService.createBook(bookDTO);
             } else {
@@ -35,11 +35,12 @@
             return new ResponseEntity<>(bookDTO, HttpStatus.OK);
         }
 
-        @GetMapping("/get")
+        @GetMapping("/get/{id}")
         @LoginCheck(type = LoginCheck.Role.USER)
-        public ResponseEntity<?> getBook(String userId, BookDTO bookDTO,
+        public ResponseEntity<?> getBook(@RequestParam String userId, boolean isAdmin,BookDTO bookDTO,
                                          @RequestParam(value = "category", required = false) String category,
-                                         @RequestParam(value = "content", required = false) String contentId,
+
+                                         @RequestParam(value = "contentId", required = false) String contentId,
                                          @RequestParam(value = "bookState", required = false) String bookState) {
 
             if (userId.equals(bookDTO.getUserId())) {
@@ -53,7 +54,7 @@
 
         @PatchMapping("/cancel/{id}")
         @LoginCheck(type = LoginCheck.Role.USER)
-        public ResponseEntity<?> cancelBook(String userId, @RequestBody BookDTO bookDTO) {
+        public ResponseEntity<?> cancelBook(String userId,boolean isAdmin, @RequestBody BookDTO bookDTO) {
             if(userId.equals(bookDTO.getUserId())){
                 bookService.cancelBook(bookDTO);
             } else {
@@ -65,7 +66,7 @@
 
         @PatchMapping("/{id}")
         @LoginCheck(type = LoginCheck.Role.USER)
-        public ResponseEntity<?> holdBook(String userId, @RequestBody BookDTO bookDTO) {
+        public ResponseEntity<?> holdBook(String userId,boolean isAdmin, @RequestBody BookDTO bookDTO) {
             if(userId.equals(bookDTO.getUserId())){
                 bookService.holdBook(bookDTO);
             } else {

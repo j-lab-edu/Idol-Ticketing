@@ -145,18 +145,20 @@ class ContentControllerTest {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    void selectGoods() throws Exception {
-//        List<ContentDTO> content = new ArrayList<>();
-//
-//        ResultActions actions =
-//                mockMvc.perform(get("/content/selets")
-//                        .param("keyword","b")
-//                                .content(String.valueOf(content))
-//                        .contentType(MediaType.APPLICATION_JSON));
-//        actions
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    void selectGoods() throws Exception {
+        String content = objectMapper.writeValueAsString(ContentDTO.builder()
+                .contentId("bille")
+                .build());
+
+        ResultActions actions =
+                mockMvc.perform(get("/content/selects")
+                        .param("keyword","b")
+                                .content(String.valueOf(content))
+                        .contentType(MediaType.APPLICATION_JSON));
+        actions
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 
 }
