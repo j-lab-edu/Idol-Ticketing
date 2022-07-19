@@ -7,10 +7,18 @@
 
     <insert id="createBoard">
         insert into help
-        (num,count,title,description,userId)
+        (num,count,title,description,userId,isAdmin)
         VALUES
-        (#{num},#{count},#{title},#{description},#{userId})
+        (#{num},#{count},#{title},#{description},#{userId},#{isAdmin})
     </insert>
+    <update id="count">
+        update help
+        set count = count +1
+        where id = #{id}
+    </update>
+    <select id = "getBoard">
+        SELECT * FROM num,count,title,description,userId  where id =#{id}
+    </select>
 
    <update id="updateBoard">
     UPDATE help
@@ -23,6 +31,11 @@
     <delete id="deleteBoard">
         DELETE from help
         WHERE
-          num = #{num}
+          id = #{id}
+    </delete>
+    <delete id="deleteBoardAdmin">
+        DELETE from help
+        WHERE
+        id = #{id}
     </delete>
 </mapper>

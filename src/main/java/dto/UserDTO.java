@@ -1,11 +1,13 @@
-package com.idolticketing.idolticketing.dto;
+package dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Data
+@Builder
 public class UserDTO {
 
     private String userId;

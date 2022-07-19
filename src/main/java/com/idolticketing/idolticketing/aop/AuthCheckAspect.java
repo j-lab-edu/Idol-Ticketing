@@ -3,38 +3,68 @@ package com.idolticketing.idolticketing.aop;
 import com.idolticketing.idolticketing.SessionUtil;
 import com.idolticketing.idolticketing.service.UserService;
 import lombok.extern.log4j.Log4j2;
-import org.aspectj.lang.JoinPoint;
+import org.apache.catalina.session.StandardSessionFacade;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 
 @Aspect
 @Component
+@Order(Ordered.LOWEST_PRECEDENCE)
 @Log4j2
 @SuppressWarnings("unchecked")
 public class AuthCheckAspect {
     @Autowired
     private UserService userService;
 
-
-    @Before("@annotation(com.idolticketing.idolticketing.aop.UserLoginCheck)")
-    public void UserLoginCheck(JoinPoint jp) throws Throwable {
+    @Around("@annotation(com.idolticketing.idolticketing.aop.LoginCheck) && @ annotation(loginCheck)")
+    public Object UserLoginCheck(ProceedingJoinPoint jp, LoginCheck loginCheck) throws Throwable {
         log.debug("AOP - User Login Check Started");
         Object[] signatureArgs = jp.getArgs();
 
-        HttpSession session = ((ServletRequestAttributes)(RequestContextHolder.currentRequestAttributes())).getRequest().getSession();
-        String sessionUserId = SessionUtil.getLoginUserId(session);
+        HttpSession session = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest().getSession();
+        String sessionUserId = null;
+        boolean isAdmin = false;
 
-        if (sessionUserId == null || !signatureArgs[1].equals(sessionUserId)) {
-            throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "NO_LOGIN") {};
+        String userType = loginCheck.type().toString();
+        switch (userType) {
+            case "ADMIN": {
+                isAdmin = true;
+                sessionUserId = SessionUtil.getLoginAdminId(session);
+                break;
+            }
+            case "USER": {
+                isAdmin = false;
+                sessionUserId = SessionUtil.getLoginUserId(session);
+                break;
+            }
         }
+        if( Collections.list(((StandardSessionFacade) session).getAttributeNames()).size() >0){
+            if (sessionUserId == null) {
+                return new ResponseEntity<>(" 권한이 없습니다. ",HttpStatus.UNAUTHORIZED);
+            }
+        } {
+            if (sessionUserId == null) {
+                return new ResponseEntity<>("로그인해주세요 ",HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        if (jp.getArgs() != null){
+            signatureArgs[0] = sessionUserId;
+            signatureArgs[1] = isAdmin;
+        }
+        return jp.proceed(signatureArgs);
     }
 
 }

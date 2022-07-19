@@ -1,4 +1,4 @@
-package com.idolticketing.idolticketing.dto;
+package dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,21 +6,26 @@ import lombok.Data;
 @Data
 @Builder
 public class HelpDTO {
+    private int num;
     private int id;
     private int count;
     private String title;
     private String description;
-    private String userid;
+    private String userId;
+    private Boolean isAdmin;
+
 
     public HelpDTO(){
 
     }
-    public HelpDTO(int id, int count,String title,String description,String userid){
+    public HelpDTO(int num,int id, int count,String title,String description,String userId,Boolean isAdmin){
+        this.num = num;
         this.id = id;
         this.count = count;
         this.title = title;
         this.description = description;
-        this.userid = userid;
+        this.userId = userId;
+        this.isAdmin = isAdmin;
     }
 
 

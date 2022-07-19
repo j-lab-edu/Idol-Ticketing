@@ -2,7 +2,7 @@ package com.idolticketing.idolticketing.service.Impl;
 
 
 import com.idolticketing.idolticketing.dao.BookMapper;
-import com.idolticketing.idolticketing.dto.BookDTO;
+import dto.BookDTO;
 import com.idolticketing.idolticketing.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,20 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDTO getBook(Integer id) {
-        return bookMapper.getBook(id);
+    public BookDTO getBook(BookDTO bookDTO) {
+        return bookMapper.getBook(bookDTO);
     }
 
     @Override
-    public int cancelBook(Integer id) {
-        return bookMapper.cancel(id);
+    public int cancelBook(BookDTO bookDTO) {
+        return bookMapper.cancelBook(bookDTO);
     }
+
+    @Override
+    public int holdBook(BookDTO bookDTO) {
+        return bookMapper.holdBook(bookDTO);
+    }
+
+
 }
 

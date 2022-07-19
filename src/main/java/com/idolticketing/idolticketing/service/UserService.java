@@ -1,17 +1,16 @@
 package com.idolticketing.idolticketing.service;
 
-import com.idolticketing.idolticketing.dto.UserDTO;
-import org.apache.catalina.User;
+import dto.UserDTO;
 
 
 public interface UserService {
 
-    //회원가입
+
     int register(UserDTO userDTO);
-    //로그인
+
     UserDTO login(UserDTO userDTO);
 
-    int updateUser(UserDTO userDTO);
+    UserDTO updateUser(UserDTO userDTO);
 
     UserDTO getUserInfo(String userId);
 

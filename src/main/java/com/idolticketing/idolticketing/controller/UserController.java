@@ -1,9 +1,10 @@
 package com.idolticketing.idolticketing.controller;
 
 import com.idolticketing.idolticketing.SessionUtil;
-import com.idolticketing.idolticketing.aop.UserLoginCheck;
-import com.idolticketing.idolticketing.dto.UserDTO;
-import com.idolticketing.idolticketing.dto.UserResponseDTO;
+import com.idolticketing.idolticketing.aop.LoginCheck;
+import com.idolticketing.idolticketing.dao.UserMapper;
+import dto.UserDTO;
+import dto.UserResponseDTO;
 import com.idolticketing.idolticketing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,10 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/users")
 public class UserController {
 
+
     @Autowired
+    UserMapper userMapper;
+
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -30,15 +34,12 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    @PutMapping(value = "login")
+    @PutMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO, HttpSession session) {
-        userService.login(userDTO);
+
         UserDTO userInfo = userService.login(userDTO);
-        if (userInfo == null) {
-            return new ResponseEntity<>(UserResponseDTO.builder()
-                    .code(401)
-                    .message("일반 유저 로그인 실패").build(), HttpStatus.NOT_FOUND);
-         } else {
+
+        if (userInfo.isAdmin() == false) {
             SessionUtil.setLoginUserId(session, userInfo.getUserId());
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .userId(userInfo.getUserId())
@@ -46,37 +47,66 @@ public class UserController {
                     .code(201)
                     .message("일반 유저 로그인 성공").build(), HttpStatus.OK);
 
+        } else if (userInfo.isAdmin()) {
+            SessionUtil.setLoginAdminId(session, userInfo.getUserId());
+            return new ResponseEntity<>(UserResponseDTO.builder()
+                    .userId(userInfo.getUserId())
+                    .name(userInfo.getName())
+                    .code(202)
+                    .message("관리자 로그인 성공").build(), HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(UserResponseDTO.builder()
+                    .code(401)
+                    .message("로그인 실패").build(), HttpStatus.NOT_FOUND);
         }
     }
 
-    @PatchMapping("updateuser/{userId}")
-    @UserLoginCheck
-    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO, @PathVariable String userId) {
-        userService.updateUser(userDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PatchMapping(value = "/updateuser")
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public ResponseEntity<?> updateUser(String userId,boolean isAdmin,@RequestBody UserDTO userDTO) {
+        if(userId.equals(userDTO.getUserId())) {
+            userService.updateUser(userDTO);
+        }else {
+            return new ResponseEntity<>("잘못된 접근입니다.",HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("수정되었습니다.",HttpStatus.OK);
     }
 
     @PutMapping(value = "logout/{userId}")
-    @UserLoginCheck
-    public String logout(HttpSession session,@PathVariable String userId) {
-        SessionUtil.clear(session);
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public String logout(String userId,boolean isAdmin, HttpSession session, @RequestBody UserDTO userDTO) {
+        if(userId.equals(userDTO.getUserId())){
+            SessionUtil.clear(session);
+        }else{
+            return ("잘못된 접근입니다.");
+        }
         return ("로그아웃 되었습니다.");
     }
 
 
     @DeleteMapping("{userId}")
-    @UserLoginCheck
-    public ResponseEntity<?> delete(@RequestBody UserDTO userDTO,@PathVariable String userId) {
-        userService.delete(userDTO);
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    @LoginCheck(type = LoginCheck.Role.USER)
+    public ResponseEntity<?> delete(String userId, @RequestBody UserDTO userDTO) {
+        if(userId.equals(userDTO.getUserId())) {
+            userService.delete(userDTO);
+        }else {
+            return new ResponseEntity<>("잘못된 접근입니다.",HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
     }
 
     @GetMapping("myInfo")
-    @UserLoginCheck
+    @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity<UserDTO> userInfo(HttpSession session) {
         String userId = SessionUtil.getLoginUserId(session);
         UserDTO userInfo = userService.getUserInfo(userId);
         return new ResponseEntity<UserDTO>((userInfo), HttpStatus.OK);
+    }
+
+    @GetMapping("sessionExpire")
+    public void sessionExpire(HttpSession session) {
+        SessionUtil.clear(session);
     }
 
 }
