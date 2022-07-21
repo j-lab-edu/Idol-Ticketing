@@ -2,9 +2,9 @@ package com.idolticketing.idolticketing.controller;
 
 import com.idolticketing.idolticketing.aop.LoginCheck;
 import com.idolticketing.idolticketing.dao.ContentMapper;
+import com.idolticketing.idolticketing.service.ContentService;
 import dto.ContentCategory;
 import dto.ContentDTO;
-import com.idolticketing.idolticketing.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +43,7 @@ public class ContentController {
         }
         return new ResponseEntity<>(contentDTO, HttpStatus.OK);
     }
+
     @PostMapping("notice")
     @LoginCheck(type = LoginCheck.Role.ADMIN)
     @ResponseStatus(HttpStatus.CREATED)
@@ -54,7 +55,6 @@ public class ContentController {
         }
         return new ResponseEntity<>(contentDTO, HttpStatus.OK);
     }
-
 
     @GetMapping("/{id}")
     @LoginCheck(type = LoginCheck.Role.USER)
@@ -91,7 +91,7 @@ public class ContentController {
 
     @DeleteMapping("/{id}")
     @LoginCheck(type = LoginCheck.Role.ADMIN)
-    public ResponseEntity<?> deleteGoods(String userId, ContentDTO contentDTO, @PathVariable Integer id) {
+    public ResponseEntity<?> deleteGoods(String userId,boolean isAdmin, ContentDTO contentDTO, @PathVariable Integer id) {
         if (userId.equals(contentDTO.getUserId())) {
             contentService.deleteGoods(id);
         } else {

@@ -2,8 +2,8 @@ package com.idolticketing.idolticketing.controller;
 
 import com.idolticketing.idolticketing.aop.LoginCheck;
 import com.idolticketing.idolticketing.dao.HelpMapper;
-import dto.HelpDTO;
 import com.idolticketing.idolticketing.service.HelpService;
+import dto.HelpDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class HelpController {
 
     @PatchMapping("/{id}")
     @LoginCheck(type = LoginCheck.Role.USER)
-    public ResponseEntity<?> patchDesc(String userId, HelpDTO helpDTO, @PathVariable Integer id) {
+    public ResponseEntity<?> patchDesc(String userId,boolean isAdmin, HelpDTO helpDTO, @PathVariable Integer id) {
         if (userId.equals(helpDTO.getUserId())) {
             int result = helpService.patchdesc(helpDTO);
         } else {

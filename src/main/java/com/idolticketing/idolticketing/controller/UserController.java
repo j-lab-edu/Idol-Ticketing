@@ -3,9 +3,9 @@ package com.idolticketing.idolticketing.controller;
 import com.idolticketing.idolticketing.SessionUtil;
 import com.idolticketing.idolticketing.aop.LoginCheck;
 import com.idolticketing.idolticketing.dao.UserMapper;
+import com.idolticketing.idolticketing.service.UserService;
 import dto.UserDTO;
 import dto.UserResponseDTO;
-import com.idolticketing.idolticketing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,7 +87,7 @@ public class UserController {
 
     @DeleteMapping("{userId}")
     @LoginCheck(type = LoginCheck.Role.USER)
-    public ResponseEntity<?> delete(String userId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> delete(String userId,boolean isAdmin, @RequestBody UserDTO userDTO) {
         if(userId.equals(userDTO.getUserId())) {
             userService.delete(userDTO);
         }else {
@@ -97,7 +97,6 @@ public class UserController {
     }
 
     @GetMapping("myInfo")
-    @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity<UserDTO> userInfo(HttpSession session) {
         String userId = SessionUtil.getLoginUserId(session);
         UserDTO userInfo = userService.getUserInfo(userId);

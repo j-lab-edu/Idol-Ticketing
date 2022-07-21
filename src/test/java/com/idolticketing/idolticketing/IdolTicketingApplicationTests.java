@@ -62,26 +62,10 @@ class IdolTicketingApplicationTests {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private ContentService contentService;
 
-    @Autowired
-    private ContentMapper contentMapper;
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private BookService bookService;
-
-    @Autowired
-    private BookMapper bookMapper;
-
-    @Autowired
-    private HelpService helpService;
-
-    @Autowired
-    private HelpMapper helpMapper;
 
 
     @Test
